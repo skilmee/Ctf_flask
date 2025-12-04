@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card card-glass rounded-4 p-4 p-md-5">
+      <h2 class="h4 fw-semibold mb-3">
+        🎄 Мяу! Крипто‑кот Презент приветствует тебя!
+      </h2>
+      <p class="mb-3 text-slate-300">
+        Введи свой новогодний ник, под которым крипто‑кот будет звать тебя,
+        пока вы вместе наряжаете ёлку и спасаете письмо Деда Мороза.
+      </p>
+      <form method="post" novalidate>
+        <div class="mb-3">
+          <label class="form-label">Новогодний ник</label>
+          <input type="text" name="nick" class="form-control"
+                 placeholder="Например: CryptoСнеговик" required>
+        </div>
+        <button type="submit" class="btn btn-crypto w-100">
+          <i class="bi bi-rocket-takeoff-fill me-1"></i>
+          Вперёд, к ёлке и шифрам!
+        </button>
+      </form>
+      <a href="{{ url_for('index') }}" class="btn btn-outline-crypto w-100 mt-3">
+        <i class="bi bi-arrow-left me-1"></i> Вернуться на главную
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

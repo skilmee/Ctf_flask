@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center g-4">
+  <div class="col-lg-10">
+    <div class="card card-glass rounded-4 p-4 p-md-5">
+
+      <div class="row g-4 align-items-start">
+        {% if not finished %}
+        <!-- Левая колонка: письмо + зашифрованная фраза -->
+        <div class="col-md-5">
+          <div class="card card-glass rounded-4 p-3 h-100">
+            <img src="{{ url_for('static', filename='letter_bg.png') }}"
+                 alt="Письмо Деда Мороза"
+                 class="w-100 rounded-4 mb-2"
+                 style="display:block; max-height:420px; object-fit:cover; object-position:center;">
+            <p class="small mb-2">
+              Дед Мороз зашифровал своё новогоднее послание шифром Цезаря
+              со <strong>сдвигом +3</strong>. Крипто‑кот Презент просит тебя помочь с расшифровкой.
+            </p>
+            {% if cipher %}
+              <div class="small">
+                <span class="fw-semibold">Зашифрованная фраза:</span><br>
+                {{ cipher }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Правая колонка -->
+        <div class="{% if not finished %}col-md-7{% else %}col-12{% endif %}">
+          {% if not finished and step == 0 %}
+            <h2 class="h5 mb-3">
+              Как работает шифр Цезаря (сдвиг −3)
+            </h2>
+            <p class="mb-3">
+              {{ example_explain }}
+            </p>
+
+            <div class="card card-glass rounded-4 p-3 mb-3 text-center">
+              <p class="small mb-2 fw-semibold">
+                Русский алфавит с номерами букв:
+              </p>
+              <img src="{{ url_for('static', filename='alphabet.png') }}"
+                   alt="Русский алфавит с номерами букв"
+                   class="w-100 rounded-3"
+                   style="max-height:260px; object-fit:contain; object-position:center;">
+              <p class="small mt-2 mb-0 text-start">
+                Пример расшифрования: слово <strong>НОБЪ</strong> при сдвиге −3 даёт слово <strong>КЛЮЧ</strong>.
+              </p>
+            </div>
+
+            <form method="post" action="{{ url_for('submit_word') }}">
+              <button type="submit" class="btn btn-crypto w-100">
+                Понятно, хочу расшифровать письмо
+              </button>
+            </form>
+
+          {% elif not finished and step == 1 %}
+            <h2 class="h5 mb-3">
+              📨 Расшифруй письмо Деда Мороза (сдвиг −3)
+            </h2>
+            <p class="mb-3">
+              Используй алфавит ниже: каждая буква зашифрованной фразы получена сдвигом
+              <strong>+3</strong> по алфавиту. Чтобы восстановить исходный текст,
+              двигайся на три буквы <strong>НАЗАД</strong>.
+            </p>
+
+            <div class="card card-glass rounded-4 p-3 mb-3 text-center">
+              <p class="small mb-2 fw-semibold">
+                Русский алфавит с номерами букв:
+              </p>
+              <img src="{{ url_for('static', filename='alphabet.png') }}"
+                   alt="Русский алфавит с номерами букв"
+                   class="w-100 rounded-3"
+                   style="max-height:260px; object-fit:contain; object-position:center;">
+            </div>
+
+            <form method="post" action="{{ url_for('submit_word') }}" class="mb-3">
+              <div class="mb-3">
+                <label class="form-label">Введи расшифрованную фразу полностью</label>
+                <textarea name="phrase" rows="4" class="form-control"
+                          placeholder="Например: Пусть в новом году ..."
+                          required></textarea>
+              </div>
+              <button type="submit" class="btn btn-crypto w-100">
+                Проверить фразу
+              </button>
+            </form>
+            <div class="d-flex justify-content-end align-items-center mt-2">
+              <span class="small">
+                Подсказка: сначала попробуй расшифровать несколько слов и догадаться по смыслу.
+              </span>
+            </div>
+
+          {% else %}
+            <h2 class="h4 fw-semibold mb-3">
+              🎁 Письмо Деда Мороза расшифровано!
+            </h2>
+            <p class="mb-3">
+              Крипто‑кот Презент доволен: ты разобрался(ась) с шифром Цезаря
+              и вернул(а) новогоднее послание в читаемый вид.
+            </p>
+
+            <div class="d-flex justify-content-center my-3">
+              <img src="{{ url_for('static', filename='cats.png') }}"
+                   alt="Новогодние котики"
+                   class="rounded-4"
+                   style="max-width:420px; width:100%; object-fit:contain;">
+            </div>
+
+            <p class="mb-4 text-center">
+              Молодец! Скорей беги получать свой сладкий приз — котики уже мурчат в твою честь. 🎄
+            </p>
+
+            <a href="{{ url_for('reset') }}" class="btn btn-outline-crypto w-100">
+              <i class="bi bi-arrow-repeat me-1"></i> Начать всё заново
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
