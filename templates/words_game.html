@@ -31,7 +31,7 @@
         <div class="{% if not finished %}col-md-7{% else %}col-12{% endif %}">
           {% if not finished and step == 0 %}
             <h2 class="h5 mb-3">
-              Как работает шифр Цезаря (сдвиг −3)
+              Как работает шифр Цезаря (ключ: 3)
             </h2>
             <p class="mb-3">
               {{ example_explain }}
@@ -46,7 +46,7 @@
                    class="w-100 rounded-3"
                    style="max-height:260px; object-fit:contain; object-position:center;">
               <p class="small mt-2 mb-0 text-start">
-                Пример расшифрования: слово <strong>НОБЪ</strong> при сдвиге −3 даёт слово <strong>КЛЮЧ</strong>.
+                Пример расшифрования: слово <strong>«НОБЪ»</strong> при сдвиге на 3 позиции назад превращается в слово <strong>«КЛЮЧ»</strong>.
               </p>
             </div>
 
